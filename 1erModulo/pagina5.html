@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las vistas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Función para copiar solo el contenido del bloque de código
+        function copiarCodigo(id) {
+            const codigo = document.querySelector(`#${id} code`).innerText;
+            navigator.clipboard.writeText(codigo)
+                .then(() => alert('Código copiado al portapapeles'))
+                .catch(err => alert('Error al copiar el código: ' + err));
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4">
+        <!-- Botón para volver al inicio -->
+        <a href="index.html" class="inline-flex items-center text-blue-500 hover:text-blue-700 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 3.293l7 7V16a1 1 0 01-1 1h-4v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3H4a1 1 0 01-1-1v-5.707l7-7z" />
+            </svg>
+            Ir al inicio
+        </a>
+
+        <h1 class="text-2xl font-bold mb-4">Las vistas para los modelos</h1>
+        <p class="mb-4">
+           La carpeta <code>views</code> contiene archivos XML que definen la interfaz de usuario para los modelos del módulo. El archivo views.xml es un ejemplo de archivo de vista y suele contener formularios, listas y otros elementos de interfaz
+        </p>
+
+        <!-- Bloque de código con botón para copiar -->
+        <div class="relative bg-gray-800 text-white p-4 rounded mb-4">
+            <button onclick="copiarCodigo('codigo_csv')" class="absolute top-2 right-2 bg-blue-500 text-white text-sm px-2 py-1 rounded hover:bg-blue-600">
+                Copiar código
+            </button>
+            <pre id="codigo_csv">
+                <code>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="libreria.libro_list">
+      <field name="name">Libros list</field>
+      <field name="model">libreria.libro</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="numPaginas"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="libreria.libro_action_window">
+      <field name="name">Listado de Libros </field>
+      <field name="res_model">libreria.libro</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="libreria.action_server">
+      <field name="name">libreria server</field>
+      <field name="model_id" ref="model_libreria_libreria"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <menuitem name="Gestión de Libreria" id="libreria.menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Gestión" id="libreria.menu_1" parent="libreria.menu_root"/>
+    <!-- actions -->
+    <menuitem name="Libros" id="libreria.menu_1_list" parent="libreria.menu_1"
+              action="libreria.libro_action_window"/>
+  </data>
+</odoo>
+
+                </code>
+            </pre>
+        </div>
+
+        <!-- Botones de navegación -->
+        <div class="flex justify-between mt-6">
+            <a href="pagina4.html" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                Anterior
+            </a>
+            <a href="javascript:alert('Si no te funciona revisa todo desde el principio y si lo tienes igual, reinicia el servicio de Odoo. Busca el error y esfuerzate en encontrar el problema')" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Siguiente paso
+            </a>
+        </div>
+    </div>
+
+    <footer class="mt-8 text-center text-gray-600">
+        <p>Creado por Fernando del Fresno García</p>
+        <p>Sistemas de Gestión Empresarial</p>
+    </footer>
+</body>
+</html>
